@@ -5,17 +5,19 @@ import json
 import sched
 import os
 import csv
+import sys
 from keys import keys
 from datetime import datetime
+from os import environ
 
 def bot():
-    CONSUMER_KEY = keys['consumer_key']
-    CONSUMER_SECRET = keys['consumer_secret']
-    ACCESS_TOKEN = keys['access_token']
-    ACCESS_TOKEN_SECRET = keys['access_token_secret']
+    CONSUMER_KEY = environ['consumer_key']
+    CONSUMER_SECRET = environ['consumer_secret']
+    ACCESS_TOKEN = environ['access_token']
+    ACCESS_TOKEN_SECRET = environ['access_token_secret']
     ANSWER_FILE_NAME = 'answer.csv'
-    OCR_KEY = keys['ocr_key']
-    OCR_KEY_2 = keys['ocr_key_2']
+    OCR_KEY = environ['ocr_key']
+    OCR_KEY_2 = environ['ocr_key_2']
 
     auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
     auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
