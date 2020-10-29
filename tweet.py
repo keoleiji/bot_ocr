@@ -11,13 +11,13 @@ from datetime import datetime
 from os import environ
 
 def bot():
-    CONSUMER_KEY = os.environ['consumer_key']
-    CONSUMER_SECRET = os.environ['consumer_secret']
-    ACCESS_TOKEN = os.environ['access_token']
-    ACCESS_TOKEN_SECRET = os.environ['access_token_secret']
+    CONSUMER_KEY = environ['consumer_key']
+    CONSUMER_SECRET = environ['consumer_secret']
+    ACCESS_TOKEN = environ['access_token']
+    ACCESS_TOKEN_SECRET = environ['access_token_secret']
     ANSWER_FILE_NAME = 'answer.csv'
-    OCR_KEY = os.environ['ocr_key']
-    OCR_KEY_2 = os.environ['ocr_key_2']
+    OCR_KEY = environ['ocr_key']
+    OCR_KEY_2 = environ['ocr_key_2']
 
     auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
     auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
