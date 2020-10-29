@@ -36,7 +36,7 @@ def bot():
     answer_data = list(read_answer)
     read_file.close()
 
-    search = '@botcovidbr'
+    search = '@ConvertToText'
     numero_de_tweets = 250
 
     for tweet in tweepy.Cursor(api.search, search, include_entities=True).items(numero_de_tweets):
