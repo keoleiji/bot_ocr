@@ -6,7 +6,7 @@ import sched
 import os
 import csv
 import sys
-from keys import keys
+#from keys import keys
 from datetime import datetime
 from os import environ
 
