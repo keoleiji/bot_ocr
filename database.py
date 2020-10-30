@@ -40,6 +40,7 @@ def read_db(id):
         print("return if tweet already was replied")
         for row in mobile_records:
             if str(id) in row:
+                print(id, row)
                 return True
     except (Exception, psycopg2.Error) as error :
         print ("Error while fetching data from PostgreSQL", error)
