@@ -6,6 +6,9 @@ import sched
 import os
 import csv
 import sys
+import psycopg2
+import database
+from database import db
 #from keys import keys
 from datetime import datetime
 from os import environ
@@ -57,19 +60,19 @@ def bot():
                         reply_text = res['ParsedResults'][0]['ParsedText']
                         print('texto:', tweet.text, '\nid:', tweet.id)
                         try:
-                            api.update_status(status = '@'+tweet.user.screen_name + '\n' + reply_text, in_reply_to_status_id = tweet.id, auto_populate_reply_metadata=True)
-                            write_file = open(ANSWER_FILE_NAME, 'a', newline="")
-                            write_answer = csv.writer(write_file)
-                            write_answer.writerow([tweet.user.screen_name, tweet.id, datetime.now()])
-                            write_file.close()
-                            time.sleep(15)
+                            api.update_status(status = '@'+tweet.user.screen_name + '\n' + reply_text, in_reply_to_status_id = tweet.id, auto_populate_reply_metadata=True)                            
+                            db(tweet.user.screen_name, tweet.id, datetime.now())
+                            #write_file = open(ANSWER_FILE_NAME, 'a', newline="")
+                            #write_answer = csv.writer(write_file)
+                            #write_answer.writerow([tweet.user.screen_name, tweet.id, datetime.now()])
+                            #write_file.close()
+                            #time.sleep(15)                                
                         except tweepy.TweepError as e:
                             print(e.reason)
             except tweepy.TweepError as e:
                 print(e.reason)
             except StopIteration:
                 break
-
 
 while True:
     bot()
