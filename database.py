@@ -2,12 +2,12 @@ import psycopg2
 import os
 from os import environ
 
-DATABASE_URL = environ['DATABASE_URL']
-conn = psycopg2.connect(DATABASE_URL, sslmode='require')
-cursor = conn.cursor()
-
 def insert_db(sn,ti,d):
-    try:        
+    try:
+        DATABASE_URL = environ['DATABASE_URL']
+        conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+        cursor = conn.cursor()
+
         postgres_insert_query = """ INSERT INTO answer (screen_name, tweet_id, data) VALUES (%s,%s,%s)"""
         records_to_insert = (sn, ti, d)
         cursor.execute(postgres_insert_query, records_to_insert)
@@ -27,6 +27,10 @@ def insert_db(sn,ti,d):
 
 def read_db(id):
     try:
+        DATABASE_URL = environ['DATABASE_URL']
+        conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+        cursor = conn.cursor()
+
         postgres_select_query = """ SELECT * FROM ANSWER """
 
         cursor.execute(postgres_select_query)
