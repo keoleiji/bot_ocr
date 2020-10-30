@@ -43,10 +43,11 @@ def bot():
     numero_de_tweets = 250
 
     for tweet in tweepy.Cursor(api.search, search, include_entities=True).items(numero_de_tweets):
-        if read_db(tweet.id) == True:
+        found = read_db(tweet.id)
+        if found == True:
             print('found', tweet.id)
             break
-        if read_db(tweet.id) == False:
+        if found == False:
             try:
                 print('not found', tweet.id)
                 if 'media' in tweet.entities:
