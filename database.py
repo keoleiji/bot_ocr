@@ -3,11 +3,10 @@ import os
 from os import environ
 
 DATABASE_URL = environ['DATABASE_URL']
-conn = psycopg2.connect('DATABASE_URL', sslmode='require')
+conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 cursor = conn.cursor()
 
 def insert_db(sn,ti,d):
-
     try:        
         postgres_insert_query = """ INSERT INTO answer (screen_name, tweet_id, data) VALUES (%s,%s,%s)"""
         records_to_insert = (sn, ti, d)
@@ -27,11 +26,10 @@ def insert_db(sn,ti,d):
             print("PostgreSQL connection is closed")
 
 def read_db(id):
-
     try:
-        postgreSQL_select_Query = "select * from answer"
+        postgres_select_query = """ SELECT * FROM ANSWER """
 
-        cursor.execute(postgreSQL_select_Query)
+        cursor.execute(postgres_select_query)
         print("Selecting rows from answer table using cursor.fetchall")
         mobile_records = cursor.fetchall() 
         
