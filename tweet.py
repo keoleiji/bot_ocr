@@ -67,7 +67,7 @@ def bot():
                             #write_answer = csv.writer(write_file)
                             #write_answer.writerow([tweet.user.screen_name, tweet.id, datetime.now()])
                             #write_file.close()
-                            #time.sleep(15)                                
+                            time.sleep(25)                                
                         except tweepy.TweepError as e:
                             print(e.reason)
             except tweepy.TweepError as e:
