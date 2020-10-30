@@ -8,7 +8,7 @@ import csv
 import sys
 import psycopg2
 import database
-from database import db
+from database import insert_db, read_db
 #from keys import keys
 from datetime import datetime
 from os import environ
@@ -43,13 +43,10 @@ def bot():
     numero_de_tweets = 250
 
     for tweet in tweepy.Cursor(api.search, search, include_entities=True).items(numero_de_tweets):
-        for name, id, data in answer_data:
-            found = False
-            if str(tweet.id) == id:
-                found = True
-                print('found', tweet.id)
-                break
-        if found == False:
+        if read_db(tweet.id) == True:
+            print('found', tweet.id)
+            break
+        if read_db(tweet.id) == False:
             try:
                 print('not found', tweet.id)
                 if 'media' in tweet.entities:
@@ -61,7 +58,7 @@ def bot():
                         print('texto:', tweet.text, '\nid:', tweet.id)
                         try:
                             api.update_status(status = '@'+tweet.user.screen_name + '\n' + reply_text, in_reply_to_status_id = tweet.id, auto_populate_reply_metadata=True)                            
-                            db(tweet.user.screen_name, tweet.id, datetime.now())
+                            insert_db(tweet.user.screen_name, tweet.id, datetime.now())
                             #write_file = open(ANSWER_FILE_NAME, 'a', newline="")
                             #write_answer = csv.writer(write_file)
                             #write_answer.writerow([tweet.user.screen_name, tweet.id, datetime.now()])

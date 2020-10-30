@@ -2,12 +2,13 @@ import psycopg2
 import os
 from os import environ
 
-def db(sn,ti,d):
+def insert_db(sn,ti,d):
 
     try:
         DATABASE_URL = environ['DATABASE_URL']
         conn = psycopg2.connect(DATABASE_URL, sslmode='require')
         cursor = conn.cursor()
+        
         postgres_insert_query = """ INSERT INTO answer (screen_name, tweet_id, data) VALUES (%s,%s,%s)"""
         records_to_insert = (sn, ti, d)
         cursor.execute(postgres_insert_query, records_to_insert)
@@ -18,6 +19,32 @@ def db(sn,ti,d):
         if(conn):
             print("Failed to insert record into mobile table", error)
 
+    finally:
+        #closing database connection.
+        if(conn):
+            cursor.close()
+            conn.close()
+            print("PostgreSQL connection is closed")
+
+def read_db(id):
+
+    try:
+        DATABASE_URL = environ['DATABASE_URL']
+        conn = psycopg2.connect('DATABASE_URL', sslmode='require')
+        cursor = conn.cursor()
+
+        postgreSQL_select_Query = "select * from answer"
+
+        cursor.execute(postgreSQL_select_Query)
+        print("Selecting rows from answer table using cursor.fetchall")
+        mobile_records = cursor.fetchall() 
+        
+        print("return if tweet already was replied")
+        for row in mobile_records:
+            if str(id) in row:
+                return True
+    except (Exception, psycopg2.Error) as error :
+        print ("Error while fetching data from PostgreSQL", error)
     finally:
         #closing database connection.
         if(conn):
