@@ -49,7 +49,6 @@ def bot():
                 found = True
                 print('found', tweet.id)
                 break
-        #if found == False:
         if found == False:
             try:
                 print('not found', tweet.id)
@@ -67,7 +66,7 @@ def bot():
                             #write_answer = csv.writer(write_file)
                             #write_answer.writerow([tweet.user.screen_name, tweet.id, datetime.now()])
                             #write_file.close()
-                            time.sleep(25)                                
+                            time.sleep(15)                                
                         except tweepy.TweepError as e:
                             print(e.reason)
             except tweepy.TweepError as e:
@@ -77,3 +76,4 @@ def bot():
 
 while True:
     bot()
+    time.sleep(10)
