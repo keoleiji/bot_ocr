@@ -69,6 +69,21 @@ def bot():
                             time.sleep(15)                                
                         except tweepy.TweepError as e:
                             print(e.reason)
+                else:
+                    tweet_reply = api.get_status(tweet.in_reply_to_status_id_str)
+                    if 'media' in tweet_reply.entities:
+                        for image in tweet_reply.entities['media']:
+                            image_url = image['media_url']
+                            req = requests.get('https://api.ocr.space/parse/imageurl?apikey='+OCR_KEY+'&url='+image_url)
+                            res = json.loads(req.text)
+                            reply_text = res['ParsedResults'][0]['ParsedText']
+                            print('texto:', tweet.text, '\nid:', tweet.id)
+                            try:
+                                api.update_status(status = '@'+tweet.user.screen_name + '\n' + reply_text, in_reply_to_status_id = tweet.id, auto_populate_reply_metadata=True)
+                                insert_db(tweet.user.screen_name, tweet.id, datetime.now())
+                                time.sleep(15)
+                            except tweepy.TweepError as e:
+                                print(e.reason)
             except tweepy.TweepError as e:
                 print(e.reason)
             except StopIteration:
