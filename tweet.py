@@ -66,7 +66,7 @@ def bot():
                             #write_answer = csv.writer(write_file)
                             #write_answer.writerow([tweet.user.screen_name, tweet.id, datetime.now()])
                             #write_file.close()
-                            time.sleep(15)                                
+                            time.sleep(20)                                
                         except tweepy.TweepError as e:
                             print(e.reason)
                 else:
@@ -82,7 +82,7 @@ def bot():
                             try:
                                 api.update_status(status = '@'+tweet.user.screen_name + '\n' + reply_text, in_reply_to_status_id = tweet.id, auto_populate_reply_metadata=True)
                                 insert_db(tweet.user.screen_name, tweet.id, datetime.now())
-                                time.sleep(15)
+                                time.sleep(20)
                             except tweepy.TweepError as e:
                                 print(e.reason)
             except tweepy.TweepError as e:
@@ -92,4 +92,4 @@ def bot():
 
 while True:
     bot()
-    time.sleep(15)
+    time.sleep(20)
