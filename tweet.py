@@ -70,6 +70,7 @@ def bot():
                         except tweepy.TweepError as e:
                             print(e.reason)
                 else:
+                    print('tweet sem imagem')
                     tweet_reply = api.get_status(tweet.in_reply_to_status_id_str)
                     if 'media' in tweet_reply.entities:
                         for image in tweet_reply.entities['media']:
